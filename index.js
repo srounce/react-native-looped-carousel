@@ -25,7 +25,8 @@ var Carousel = React.createClass({
         delay: React.PropTypes.number,
         style: View.propTypes.style,
         panelStyle: View.propTypes.style,
-        contentContainerStyle: View.propTypes.style
+        contentContainerStyle: View.propTypes.style,
+        autoplay: React.PropTypes.bool
     },
     mixins: [TimerMixin],
     getDefaultProps: function() {
