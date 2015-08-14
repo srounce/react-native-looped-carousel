@@ -25,7 +25,14 @@ var Carousel = React.createClass({
     propTypes:{
         children: React.PropTypes.node.isRequired,
         delay: React.PropTypes.number,
-        style: View.propTypes.style
+        style: View.propTypes.style,
+        onScroll: React.PropTypes.func,
+        onMomentumScrollBegin: React.PropTypes.func,
+        onMomentumScrollEnd: React.PropTypes.func,
+        onTouchStart: React.PropTypes.func,
+        onTouchStartCapture: React.PropTypes.func,
+        onTouchStartEnd: React.PropTypes.func,
+        onResponderRelease: React.PropTypes.func
     },
     mixins: [TimerMixin],
     getDefaultProps: function() {
@@ -67,6 +74,8 @@ var Carousel = React.createClass({
 
       this._calculateCurrentPage(offset.x);
       this.setState({contentOffset: offset});
+
+      this.props.onMomentumScrollEnd.apply(this, [].slice.apply(arguments));
     },
     _setUpTimer: function() {
       //only for cycling
@@ -125,7 +134,13 @@ var Carousel = React.createClass({
         <ScrollView
           ref='scrollView'
           onScrollBeginDrag={this._onScrollBegin}
+          onMomentumScrollBegin={this.props.onMomentumScrollBegin}
           onMomentumScrollEnd={this._onScrollEnd}
+          onScroll={this.props.onScroll}
+          onTouchStart={this.props.onTouchStart}
+          onTouchStartCapture={this.props.onTouchStartCapture}
+          onTouchStartEnd={this.props.onTouchStartEnd}
+          onResponderRelease={this.props.onResponderRelease}
           alwaysBounceHorizontal={false}
           alwaysBounceVertical={false}
           showsHorizontalScrollIndicator={false}
